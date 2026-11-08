@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Water Hardness Lab (EDTA)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#eef6f4;--card:#fff;--ink:#12302c;--mut:#587270;--pri:#0f766e;--pri2:#0b4f4a;--line:#cfe3df;--note:#e3f4f1;--warn:#fff1d6;--ok:#e1f5e8;--bad:#fde8e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1917;--card:#122523;--ink:#e3f2ef;--mut:#93b0ab;--pri:#0d8a7f;--pri2:#0a5f57;--line:#23403c;--note:#14302d;--warn:#3a3217;--ok:#16321f;--bad:#3a1b1b}}
+:root[data-theme="dark"]{--bg:#0b1917;--card:#122523;--ink:#e3f2ef;--mut:#93b0ab;--pri:#0d8a7f;--pri2:#0a5f57;--line:#23403c;--note:#14302d;--warn:#3a3217;--ok:#16321f;--bad:#3a1b1b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Plus Jakarta Sans","Segoe UI",system-ui,sans-serif}
+header{background:var(--pri2);color:#fff;padding:20px 16px;text-align:center}
+
+h1{font-weight:700;font-size:1.7rem;line-height:1.2;margin:0 0 4px}
+h2{font-size:1.15rem;line-height:1.3;margin:0 0 8px}
+h3{font-size:1rem;margin:14px 0 6px}
+.sub{color:#bfe6e1}
+main{max-width:1120px;margin:0 auto;padding:14px}
+.ids{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+label{font-weight:600;font-size:.9rem}
+input[type=text],input[type=number],input[type=date],select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit}
+nav{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}
+nav button{flex:1 0 auto;padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--mut);font-weight:600;font-size:.9rem;font-family:inherit;cursor:pointer}
+nav button.on{background:var(--pri);color:#fff}
+nav button:disabled{opacity:.5;cursor:not-allowed}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(15,60,55,.07)}
+.eq{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0;text-align:center;overflow-x:auto}
+.note{background:var(--note);border-left:4px solid var(--pri);border-radius:6px;padding:8px 12px;margin:10px 0}
+.warn{background:var(--warn);border-radius:6px;padding:8px 12px;margin:10px 0}
+.btn{padding:10px 18px;border:0;border-radius:999px;background:var(--pri);color:#fff;font-weight:600;font-size:.95rem;font-family:inherit;cursor:pointer}
+.btn.alt{background:var(--note);color:var(--ink)}
+.btn.red{background:var(--bad);color:#a3202f}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1fr);gap:12px}
+@media(max-width:860px){.lab{grid-template-columns:1fr}}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);cursor:grab;font-weight:600;font-size:.9rem}
+.slots{display:flex;gap:6px;margin:8px 0}
+.slot{flex:1;min-height:46px;border:2px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.8rem;color:var(--mut);padding:4px}
+.slot.ok{border-style:solid;border-color:#2e9e5b;color:#2e9e5b;font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--note);border-radius:8px;padding:8px;text-align:center;font-size:.85rem}
+.stat b{display:block;font-size:1.15rem}
+.bar{background:var(--pri2);color:#fff;border-radius:8px;padding:8px 12px;font-weight:600;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:center}
+th{background:var(--note)}
+.res{background:var(--ok);border-left:4px solid #2e9e5b;border-radius:8px;padding:10px 14px;margin-top:10px}
+.res b.big{font-size:1.1rem}
+.legend{display:flex;justify-content:space-around;font-size:.75rem;text-align:center;color:var(--mut);margin-top:6px}
+.legend i{display:block;width:22px;height:22px;border-radius:50%;margin:0 auto 2px}
+.scroll{overflow-x:auto}
+@media print{nav,.noprint,.btn{display:none!important}body{background:#fff;color:#000}.card{border:1px solid #999}}
+</style></head>
+<body>
+<header><h1>Water Hardness Lab</h1><div class="sub">Find how hard a water sample is using an EDTA titration</div></header>
+<main>
+<div class="ids">
+<div><label for="nm">Student name</label><input id="nm" type="text" placeholder="Enter full name"></div>
+<div><label for="rg">Registration number</label><input id="rg" type="text" placeholder="Enter registration number"></div>
+<div><label for="dt">Date</label><input id="dt" type="date" value="2026-11-08"></div>
+</div>
+<nav id="nav"></nav>
+<div id="panel"></div>
+<p style="text-align:center;color:var(--mut);font-size:.85rem">Educational virtual simulation. Readings are simulated for practice and are not experimental measurements.</p>
+</main>
+<script>
+const R=Math.random,$=s=>document.querySelector(s);
+const S={tab:0,a1:false,a2:false,sc:1,M:0.01,fac:0.97+R()*0.06,H:280+Math.round(R()*140),sel:{std:0,smp:0},T:{},V1:null,Vs:null,msg:{}};
+const fresh=n=>({sl:{b:0,p:0,f:0},pip:0,buf:0,ind:0,v:0,rec:null,n:n===undefined?(Math.floor(R()*3)-1)*0.05:n});
+['std','smp'].forEach(m=>S.T[m]=[fresh(),fresh(),fresh()]);
+const tM=()=>S.M*S.fac;
+const Ve=(m,t)=>Math.round(((m==='std'?20*S.sc:S.H*0.02)/100.09/tM()+t.n)*20)/20;
+const hx=c=>[1,3,5].map(i=>parseInt(c.substr(i,2),16));
+const mix=(a,b,k)=>'#'+hx(a).map((x,i)=>Math.round(x+(hx(b)[i]-x)*k).toString(16).padStart(2,'0')).join('');
+function col(m,t){
+  if(!t.pip)return['','Empty flask'];
+  if(!t.ind)return['#cfe3f0','Colourless'];
+  const d=Ve(m,t)-t.v;
+  if(d<=0)return['#2f6fe0','Blue (endpoint)'];
+  if(d>1)return['#a8173b','Wine red'];
+  if(d>0.3)return[mix('#a8173b','#6a3fa0',(1-d)/0.7),'Red-violet'];
+  return[mix('#6a3fa0','#2f6fe0',(0.3-d)/0.3*0.6),'Violet, near endpoint'];
+}
+function mean(m){const r=S.T[m].map(t=>t.rec).filter(x=>x!==null);
+  for(let a=0;a<r.length;a++)for(let b=a+1;b<r.length;b++)if(Math.abs(r[a]-r[b])<=0.1001)return(r[a]+r[b])/2;return null}
+const tabs=['1 Learn','2 Prepare','3 Standardize EDTA','4 Test your water','5 Report'];
+const open=n=>[true,S.a1,S.a2,S.V1!==null,S.Vs!==null][n];
+function classify(h){return h<60?'soft':h<120?'moderately hard':h<180?'hard':'very hard'}
+
+function pAim(){return `<div class="card"><h2>Aim</h2>
+<p>Find the hardness of a water sample, in ppm of CaCO₃, by titrating it with EDTA.</p>
+<h2>Principle</h2>
+<p>Hard water contains dissolved calcium and magnesium. The indicator (EBT) turns wine red when it holds these ions. EDTA holds them more tightly, so once it has taken them all, the indicator is free and turns blue.</p>
+<div class="eq">M²⁺ + EBT (blue) → [M–EBT] (wine red)<br>[M–EBT] + EDTA → [M–EDTA] + EBT (blue)</div>
+<p>An ammonia buffer keeps the pH at 10, where this reaction works best.</p>
+<div class="note"><b>Stop titrating when</b> the flask turns from wine red to clear blue.</div>
+<h3>Materials required</h3>
+<p>Standard hard water, EDTA solution, ammonia buffer (pH 10), EBT indicator, burette, pipette and conical flask.</p>
+<h3>Calculation principle</h3>
+<div class="eq">V₁ = EDTA used for 20 mL of standard hard water<br>V₂ = EDTA used for 20 mL of your sample</div>
+<div class="eq">Hardness (ppm CaCO₃) = (V₂ / V₁) × 1000</div>
+<div class="warn">This is a simulation. In a real lab, follow your instructor’s directions.</div>
+<label><input type="checkbox" id="c1" ${S.a1?'checked':''}> I understand the aim and the colour change at the endpoint.</label>
+<div class="row"><button class="btn" id="n1" ${S.a1?'':'disabled'} data-a="tab" data-v="1">Next: prepare solutions</button></div></div>`}
+
+function pPrep(){return `<div class="card"><h2>Step 1: Solution preparation</h2>
+<p>Get these four solutions ready. You can change the amounts.</p>
+<h3>A. Standard hard water</h3>
+<label for="sc">Concentration (mg CaCO₃ per mL)</label><input id="sc" type="number" step="0.05" min="0.2" max="2" value="${S.sc}">
+<div class="eq">Mass (g) = concentration (mg/mL) × volume (mL) / 1000</div>
+<p><b>Mass required for 250 mL: <span id="m1">${(S.sc*0.25).toFixed(4)}</span> g CaCO₃.</b> Dissolve in a little dilute HCl, then make up to 250 mL with distilled water.</p>
+<h3>B. EDTA solution</h3>
+
+<label for="em">Approximate molarity (M)</label><input id="em" type="number" step="0.001" min="0.005" max="0.05" value="${S.M}">
+<p><b>Mass required for 250 mL: <span id="m2">${(S.M*372.24*0.25).toFixed(4)}</span> g.</b> Its exact value is found in the next step.</p>
+<h3>C. Ammonia buffer, pH 10</h3>
+<p>Per 100 mL: dissolve 6.75 g NH₄Cl, add 57 mL concentrated NH₃ solution and dilute to 100 mL. Use 5 mL per titration.</p>
+<h3>D. Eriochrome Black T indicator</h3>
+<p>Dissolve 0.5 g EBT in 100 mL ethanol. Use 3 drops per titration.</p>
+<div class="warn"><b>Safety:</b> wear gloves, goggles and a lab coat. Ammonia fumes are harsh, so work in a fume hood.</div>
+<label><input type="checkbox" id="c2" ${S.a2?'checked':''}> My four solutions are ready.</label>
+<div class="row"><button class="btn alt" data-a="tab" data-v="0">Back</button><button class="btn" id="n2" ${S.a2?'':'disabled'} data-a="tab" data-v="2">Next: standardize EDTA</button></div></div>`}
+
+function svg(t,c){const lv=146*t.v/50;
+  return `<svg viewBox="0 0 260 330" width="100%" style="max-width:290px;display:block;margin:auto" role="img" aria-label="Burette above a conical flask">
+<g opacity="${t.sl.b?1:.25}"><rect x="120" y="10" width="20" height="150" rx="3" fill="none" stroke="var(--ink)" stroke-width="2"/>
+<rect x="122" y="${12+lv}" width="16" height="${146-lv}" fill="#9ec5ee"/>
+<rect x="112" y="160" width="36" height="6" fill="var(--ink)"/><path d="M130 166V196" stroke="var(--ink)" stroke-width="2"/>
+<text x="150" y="30" font-size="11" fill="var(--mut)">EDTA</text></g>
+<g opacity="${t.sl.p?1:.25}"><rect x="52" y="60" width="9" height="110" rx="4" fill="${t.pip?'#cfe3f0':'none'}" stroke="var(--ink)" stroke-width="2"/><text x="30" y="52" font-size="11" fill="var(--mut)">20 mL pipette</text></g>
+<defs><clipPath id="fl"><path d="M112 205V238L62 312Q58 318 66 318H194Q202 318 198 312L148 238V205Z"/></clipPath></defs>
+<g opacity="${t.sl.f?1:.25}">${c?`<rect x="50" y="262" width="160" height="60" fill="${c}" clip-path="url(#fl)"/>`:''}
+<path d="M112 205V238L62 312Q58 318 66 318H194Q202 318 198 312L148 238V205Z" fill="none" stroke="var(--ink)" stroke-width="2"/>
+<path d="M108 205H152" stroke="var(--ink)" stroke-width="2"/></g></svg>`}
+
+function pTitr(m){
+  const i=S.sel[m],t=S.T[m][i],ready=t.sl.b&&t.sl.p&&t.sl.f,[c,cn]=col(m,t),vm=m==='std'?S.V1:S.Vs,end=t.ind&&Ve(m,t)-t.v<=0;
+  const what=m==='std'?'standard hard water':'water sample';
+  const g=!ready?['Drag the burette, pipette and flask into the dashed slots below (or tap each one).','']:!t.pip?['Pipette 20 mL of '+what+' into the flask.','pip','Pipette 20 mL']:!t.buf?['Add 5 mL of ammonia buffer.','buf','Add buffer']:!t.ind?['Add 3 drops of EBT indicator. The flask turns wine red.','ind','Add EBT']:t.rec===null?['Click the + buttons on the right to add EDTA. Stop when the flask turns blue, then click Record this titre.','']:['Titre recorded. Choose the next trial, or go on once your result appears.',''];
+  const guide=`<div class="note" style="font-size:1.05rem"><b>Do this now:</b><br>${g[0]}${g[1]?`<div class="row"><button class="btn" data-a="${g[1]}" data-m="${m}">${g[2]}</button></div>`:''}</div>`;
+  const chip=(k,l)=>`<div class="chip" draggable="true" data-a="place" data-k="${k}">${l}</div>`;
+  const slot=(k,l)=>`<div class="slot ${t.sl[k]?'ok':''}" data-slot="${k}">${t.sl[k]?l+' placed':'Drop '+l.toLowerCase()+' here'}</div>`;
+  const rows=S.T[m].map((x,j)=>`<tr><td>${j+1}</td><td>0.00</td><td>${x.rec===null?'':x.rec.toFixed(2)}</td><td>${x.rec===null?'':x.rec.toFixed(2)}</td><td>${x.rec===null?'':'Blue'}</td></tr>`).join('');
+  let res='';
+  if(vm===null)res=`<div class="res"><b class="big">${m==='std'?'Standardized EDTA':'Hardness of sample'}:</b><br>Record two titres within 0.10 mL of each other to see your result.</div>`;
+  else if(m==='std')res=`<div class="res"><b class="big">Mean titre V₁ = ${vm.toFixed(2)} mL</b><br>1 mL EDTA ≡ ${(20*S.sc/vm).toFixed(3)} mg CaCO₃<br>Molarity of EDTA = ${((20*S.sc/100.09)/vm).toFixed(5)} M</div>`;
+  else{const h=vm/S.V1*S.sc*1000;res=`<div class="res"><b class="big">Mean titre V₂ = ${vm.toFixed(2)} mL</b><br>Hardness = (${vm.toFixed(2)} / ${S.V1.toFixed(2)}) × ${(S.sc*1000).toFixed(0)} = <b>${h.toFixed(0)} ppm CaCO₃</b><br>This water is ${classify(h)}.</div>`}
+  const steps=m==='std'?['Drag the three items into their slots.','Pipette 20 mL of standard hard water.','Add buffer, then EBT. The flask turns wine red.','Add EDTA until the flask turns blue, then record the titre.','Repeat until two titres are within 0.10 mL.']:
+    ['Drag the three items into their slots.','Pipette 20 mL of your water sample.','Add buffer, then EBT. The flask turns wine red.','Add EDTA until the flask turns blue, then record the titre.','Repeat until two titres are within 0.10 mL.'];
+  return `<div class="lab">
+<div class="card"><h2>${m==='std'?'Step A: standardize EDTA':'Step B: test your water'}</h2>${guide}<h3>Equipment: drag each item into its slot (or tap it)</h3><div class="chips" data-m="${m}">${chip('b','Burette')}${chip('p','Pipette')}${chip('f','Conical flask')}</div><div class="slots" data-m="${m}">${slot('b','Burette')}${slot('p','Pipette')}${slot('f','Flask')}</div>
+<ol style="padding-left:20px;margin:0">${steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+<div class="note">${m==='std'?'1 mL of standard hard water contains '+S.sc+' mg CaCO₃.':'V₁ from Titration I = '+S.V1.toFixed(2)+' mL.'}</div>
+<label for="ts">Select trial</label><div class="row" style="margin-top:4px"><select id="ts" data-m="${m}" style="flex:1">${[0,1,2].map(j=>`<option value="${j}" ${j===i?'selected':''}>Trial ${j+1}${S.T[m][j].rec!==null?' (recorded)':''}</option>`).join('')}</select><button class="btn red" data-a="reset" data-m="${m}">Reset trial ${i+1}</button></div>
+<p>Use <b>20 mL</b> of ${what}, <b>5 mL</b> buffer and <b>3 drops</b> of EBT.</p>
+
+
+
+</div>
+<div class="card"><div style="min-height:340px">${svg(t,c)}</div>
+<div class="legend"><span><i style="background:#cfe3f0"></i>Colourless</span><span><i style="background:#a8173b"></i>Wine red</span><span><i style="background:#6a3fa0"></i>Violet</span><span><i style="background:#2f6fe0"></i>Blue endpoint</span></div></div>
+<div class="card"><div class="stats"><div class="stat">Initial burette<b>0.00 mL</b></div><div class="stat">Final burette<b>${t.v.toFixed(2)} mL</b></div></div>
+<div class="bar">Live reading</div>
+<div class="note">Reading: ${t.v.toFixed(2)} mL<br>Flask colour: ${cn}<br>Status: ${S.msg[m+i]||(t.rec!==null?'Titre recorded.':t.ind?'Titrating':'Follow the Do this now box on the left')}</div>
+<div class="row"><button class="btn" data-a="add" data-m="${m}" data-v="1" ${t.ind&&t.rec===null?'':'disabled'}>+1.0 mL</button><button class="btn" data-a="add" data-m="${m}" data-v="0.5" ${t.ind&&t.rec===null?'':'disabled'}>+0.5 mL</button><button class="btn" data-a="add" data-m="${m}" data-v="0.1" ${t.ind&&t.rec===null?'':'disabled'}>+0.1 mL</button><button class="btn" data-a="add" data-m="${m}" data-v="0.05" ${t.ind&&t.rec===null?'':'disabled'}>1 drop</button></div>
+<div class="row"><button class="btn" style="width:100%" data-a="rec" data-m="${m}" ${t.ind&&t.rec===null?'':'disabled'}>Record this titre</button></div>
+<h3>Your readings</h3>
+<div class="scroll"><table><tr><th>Trial</th><th>Initial (mL)</th><th>Final (mL)</th><th>Titre (mL)</th><th>Endpoint</th></tr>${rows}</table></div>
+${res}
+<div class="row"><button class="btn alt" data-a="tab" data-v="${m==='std'?1:2}">Back</button><button class="btn" data-a="tab" data-v="${m==='std'?3:4}" ${vm!==null?'':'disabled'}>Next: ${m==='std'?'test your water':'see your report'}</button></div></div></div>`}
+
+function pRep(){
+  const rt=m=>S.T[m].map((x,j)=>`<tr><td>${j+1}</td><td>${x.rec===null?'–':x.rec.toFixed(2)}</td></tr>`).join('');
+  const h=S.Vs/S.V1*S.sc*1000;
+  return `<div class="card" id="rep"><h2>Lab report</h2>
+<p><b>Name:</b> ${$('#nm').value||'–'} &nbsp; <b>Reg. no.:</b> ${$('#rg').value||'–'} &nbsp; <b>Date:</b> ${$('#dt').value||'–'}</p>
+<p><b>Aim:</b> To determine the hardness of a water sample using EDTA (complexometric titration).</p>
+<div class="lab" style="grid-template-columns:1fr 1fr"><div><h3>Titration I: EDTA vs standard hard water</h3><table><tr><th>Trial</th><th>Titre (mL)</th></tr>${rt('std')}</table><p>Mean V₁ = <b>${S.V1.toFixed(2)} mL</b></p></div>
+<div><h3>Titration II: EDTA vs water sample</h3><table><tr><th>Trial</th><th>Titre (mL)</th></tr>${rt('smp')}</table><p>Mean V₂ = <b>${S.Vs.toFixed(2)} mL</b></p></div></div>
+<h3>Calculation</h3><div class="eq">Hardness = (V₂ / V₁) × ${(S.sc*1000).toFixed(0)} = (${S.Vs.toFixed(2)} / ${S.V1.toFixed(2)}) × ${(S.sc*1000).toFixed(0)}</div>
+<div class="res"><b class="big">Result: the hardness of the water sample is ${h.toFixed(0)} ppm CaCO₃ (${classify(h)}).</b></div>
+<p style="margin-top:10px;color:var(--mut);font-size:.85rem">Simulated readings for practice. Not experimental data.</p></div>
+<div class="row noprint"><button class="btn alt" data-a="tab" data-v="3">Back</button><button class="btn" data-a="print">Print or save as PDF</button></div>`}
+
+function render(){
+  S.V1=mean('std');S.Vs=mean('smp');
+  $('#nav').innerHTML=tabs.map((l,n)=>`<button class="${S.tab===n?'on':''}" ${open(n)?'':'disabled'} data-a="tab" data-v="${n}">${l}</button>`).join('');
+  $('#panel').innerHTML=[pAim,pPrep,()=>pTitr('std'),()=>pTitr('smp'),pRep][S.tab]();
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,m=b.dataset.m,i=m?S.sel[m]:0,t=m?S.T[m][i]:null,v=parseFloat(b.dataset.v);
+  if(a==='tab'){if(open(v)){S.tab=v;render();window.scrollTo(0,0)}return}
+  if(a==='place'){t.sl[b.dataset.k]=1}
+  else if(a==='setup'){t.sl.b=t.sl.p=t.sl.f=1}
+  else if(a==='pip')t.pip=1;
+  else if(a==='buf')t.buf=1;
+  else if(a==='ind'){t.ind=1;S.msg[m+i]='Titrate until the colour turns blue.'}
+  else if(a==='add'){t.v=Math.min(50,+(t.v+v).toFixed(2));S.msg[m+i]=Ve(m,t)-t.v<-0.4?'Overshot the endpoint. Reset this trial.':''}
+  else if(a==='rec'){const d=t.v-Ve(m,t);
+    if(d<0)S.msg[m+i]='Endpoint not reached yet. Keep adding EDTA until the flask is blue.';
+    else if(d>0.4)S.msg[m+i]='Overshot the endpoint. Reset this trial.';
+    else{t.rec=t.v;S.msg[m+i]='Titre recorded.'}}
+  else if(a==='reset'){S.T[m][i]=fresh(t.n);S.msg[m+i]=''}
+  else if(a==='print'){try{window.print()}catch(x){}return}
+  render();
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='c1'){S.a1=t.checked;render()}
+  else if(t.id==='c2'){S.a2=t.checked;render()}
+  else if(t.id==='ts'){S.sel[t.dataset.m]=+t.value;render()}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='sc'&&+t.value>0){S.sc=+t.value;$('#m1').textContent=(S.sc*0.25).toFixed(4)}
+  if(t.id==='em'&&+t.value>0){S.M=+t.value;$('#m2').textContent=(S.M*372.24*0.25).toFixed(4)}
+});
+document.addEventListener('dragstart',e=>{const c=e.target.closest('.chip');if(c)e.dataTransfer.setData('text/plain',c.dataset.k)});
+document.addEventListener('dragover',e=>{if(e.target.closest('.slot'))e.preventDefault()});
+document.addEventListener('drop',e=>{
+  const s=e.target.closest('.slot');if(!s)return;e.preventDefault();
+  const k=e.dataTransfer.getData('text/plain'),m=s.parentElement.dataset.m;
+  if(k===s.dataset.slot){S.T[m][S.sel[m]].sl[k]=1;render()}
+  else{S.msg[m+S.sel[m]]='That item belongs in a different position.';render()}
+});
+render();
+</script></body></html>
