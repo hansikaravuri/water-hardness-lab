@@ -4,7 +4,7 @@ An interactive virtual chemistry lab that simulates the determination of the har
 
 Made for **Chemistry for Computer Science (26CYB1002J)**, Unit 2 practice, SRM Institute of Science and Technology, Tiruchirappalli.
 
-**Live demo:** https://YOUR-USERNAME.github.io/water-hardness-lab/
+**Live demo:** https://hansikaravuri.github.io/water-hardness-lab/
 
 ## What you can do
 
