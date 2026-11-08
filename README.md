@@ -2,7 +2,7 @@
 
 An interactive virtual chemistry lab that simulates the determination of the hardness of water by EDTA complexometric titration.
 
-Made for **Chemistry for Computer Science (26CYB1002J)**, Unit 2 practice, SRM Institute of Science and Technology, Tiruchirappalli.
+Made for **Chemistry for Computer Science (26CYB1002J)**,SRM Institute of Science and Technology, Tiruchirappalli.
 
 **Live demo:** https://hansikaravuri.github.io/water-hardness-lab/
 
